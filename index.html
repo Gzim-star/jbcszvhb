@@ -107,7 +107,7 @@ function startWordChain(){
   stage='word';
   const container=document.getElementById('gameContainer');
   container.innerHTML=`
-    <h1>Word Chain</h1>
+    <h1></h1>
     <div id="wordDisplay">Start word: Apple</div>
     <div id="inputContainer">
       <input type="text" id="playerWord" placeholder="Type your word here" autocomplete="off" autocapitalize="none">
@@ -163,10 +163,10 @@ function aiTurn(){
 }
 
 function startTicTacToe(){
-  stage='tictactoe';
+  stage='tic tac toe';
   const container=document.getElementById('gameContainer');
   container.innerHTML=`
-    <h1>Tic Tac Toe</h1>
+    <h1></h1>
     <div id="board"></div>
     <div id="timer">⏳ Time left: 6</div>
     <div id="message"></div>
@@ -252,7 +252,7 @@ function startMathChallenge(){
   stage='math';
   const container=document.getElementById('gameContainer');
   container.innerHTML=`
-    <h1>Math Challenge</h1>
+    <h1></h1>
     <div id="task">Loading...</div>
     <div id="inputContainer">
       <input id="answer" type="number" placeholder="Your answer" autofocus>
