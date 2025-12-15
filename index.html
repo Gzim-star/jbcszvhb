@@ -7,6 +7,15 @@
 <!-- Pixel Font -->
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 
+<!-- 🔒 Game Info -->
+<script>
+// 🔒 Brain-Test Game
+// 👤 Creator: Gëzim Hasani
+// 🆔 Game ID: 2025-GH-BC01
+// 📦 Version: 1.0.0
+// 📅 Created: 14.12.2025
+</script>
+
 <style>
 html, body {
   height: 100%;
@@ -95,7 +104,7 @@ button:hover {
 <body>
 
 <div id="gameContainer">
-  <h1>Math Challenge 🧮</h1>
+  <h1>🧮</h1>
 
   <div id="task">Loading...</div>
 
@@ -117,36 +126,35 @@ function randomInt(min, max) {
 }
 
 function generateTask() {
-  const ops = ["+", "-", "*", "/"];
-  const op = ops[randomInt(0, ops.length - 1)];
+  const pattern = randomInt(1, 3);
+  let a, b, c, text;
 
-  let a, b;
-
-  if (op === "+") {
-    a = randomInt(20, 100);
-    b = randomInt(10, 80);
-    correctAnswer = a + b;
+  if (pattern === 1) {
+    a = randomInt(6, 20);
+    b = randomInt(4, 15);
+    c = randomInt(5, 40);
+    correctAnswer = (a * b) - c;
+    text = `(${a} × ${b}) − ${c}`;
   }
 
-  if (op === "-") {
-    a = randomInt(30, 100);
-    b = randomInt(10, a);
-    correctAnswer = a - b;
+  if (pattern === 2) {
+    a = randomInt(10, 40);
+    b = randomInt(5, 30);
+    c = randomInt(2, 8);
+    correctAnswer = (a + b) * c;
+    text = `(${a} + ${b}) × ${c}`;
   }
 
-  if (op === "*") {
-    a = randomInt(4, 15);
-    b = randomInt(4, 12);
-    correctAnswer = a * b;
+  if (pattern === 3) {
+    c = randomInt(2, 6);
+    correctAnswer = randomInt(5, 20);
+    b = randomInt(5, 30);
+    a = (correctAnswer * c) + b;
+    correctAnswer = (a - b) / c;
+    text = `(${a} − ${b}) ÷ ${c}`;
   }
 
-  if (op === "/") {
-    b = randomInt(2, 12);
-    correctAnswer = randomInt(3, 15);
-    a = b * correctAnswer;
-  }
-
-  document.getElementById("task").textContent = `${a} ${op} ${b} = ?`;
+  document.getElementById("task").textContent = `${text} = ?`;
   document.getElementById("answer").value = "";
   document.getElementById("answer").focus();
 }
@@ -172,6 +180,37 @@ function checkAnswer() {
 }
 
 generateTask();
+</script>
+
+<!-- 🔐 Hidden Signature Script -->
+<script>
+(function(){
+  const DEV = {
+    name: "Gëzim Hasani",
+    id: "2025-GH-BC01",
+    date: "14.12.2025",
+    mode: "Medium Math Challenge"
+  };
+
+  Object.freeze(DEV);
+
+  console.log(
+    "%c🔐 Original Game Loaded",
+    "color:#4dd0e1;font-weight:bold;font-size:14px"
+  );
+
+  window.addEventListener("keydown", e => {
+    if (e.ctrlKey && e.altKey && e.key.toLowerCase() === "g") {
+      alert(
+        "🔒 ORIGINAL GAME\n\n" +
+        "👤 Creator: " + DEV.name + "\n" +
+        "🆔 ID: " + DEV.id + "\n" +
+        "📅 Date: " + DEV.date + "\n" +
+        "🎮 Mode: " + DEV.mode
+      );
+    }
+  });
+})();
 </script>
 
 </body>
