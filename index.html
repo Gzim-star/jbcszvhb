@@ -86,7 +86,6 @@ button:hover { background: #4caf50; }
 #board { display: grid; grid-template-columns: repeat(3, 150px); grid-template-rows: repeat(3, 150px); gap: 10px; }
 .cell { width:150px; height:150px; display:flex; align-items:center; justify-content:center; font-size:72px; cursor:pointer; transition:all 0.3s; color:white; font-weight:bold; border-radius:12px; }
 .cell:hover { transform:scale(1.05); filter: brightness(1.2); }
-.highlight { background:#ffe082 !important; color:#000 !important; }
 
 #scoreboard, #level { margin-top:10px; color:white; }
 @media (max-width:768px){
@@ -103,23 +102,47 @@ button:hover { background: #4caf50; }
 <body>
 <div id="gameContainer">
   <h1>🧠</h1>
-  <button onclick="startWordChain()">START</button>
+  <button onclick="startGame()">START</button>
 </div>
 
 <script>
-let stage='start';
 let wordScore=0;
 let ticScore={player:0,ai:0,draw:0};
 let correctAnswer=0;
 let timer=6;
 let timerInterval;
+let mathTimer=12;
+let mathTimerInterval;
 let board=[];
 let gameOver=false;
-let mathTimer=12; // Timer für Math-Challenge
-let mathTimerInterval;
+let currentWord='';
+let usedWords=[];
+let wordList=[
+  "Apple","Elephant","Tiger","Rabbit","Tree","Eagle","Egg","Giraffe",
+  "Fish","Horse","Orange","Grapes","Snake","Emu","Umbrella","Lion",
+  "Nut","Tapir","Rat","Tomato","Owl","Lemon","Night","Hat","Turtle",
+  "Eel","Lamb","Bread","Dog","Goat","Ant","Seal","Lily","Yak","Kangaroo"
+];
 
+// ==== START SPIEL ====
+function startGame(){
+  clearAllTimers();
+  wordScore=0;
+  ticScore={player:0,ai:0,draw:0};
+  board=[];
+  gameOver=false;
+  currentWord='';
+  usedWords=[];
+  const container=document.getElementById('gameContainer');
+  container.innerHTML=`
+    <h1>🧠</h1>
+    <button onclick="startWordChain()">START</button>
+  `;
+}
+
+// ==== WORD CHAIN ====
 function startWordChain(){
-  stage='word';
+  clearAllTimers();
   const container=document.getElementById('gameContainer');
   container.innerHTML=`
     <h1></h1>
@@ -132,16 +155,7 @@ function startWordChain(){
   `;
   currentWord='Apple';
   usedWords=[currentWord];
-  wordList=[
-    "Apple","Elephant","Tiger","Rabbit","Tree","Eagle","Egg","Giraffe",
-    "Fish","Horse","Orange","Grapes","Snake","Emu","Umbrella","Lion",
-    "Nut","Tapir","Rat","Tomato","Owl","Lemon","Night","Hat","Turtle",
-    "Eel","Lamb","Bread","Dog","Goat","Ant","Seal","Lily","Yak","Kangaroo"
-  ];
 }
-
-let currentWord='';
-let usedWords=[];
 
 function playWord(){
   const input=document.getElementById('playerWord');
@@ -151,14 +165,14 @@ function playWord(){
   if(!word) return;
   const lastChar=currentWord.slice(-1).toLowerCase();
   const reversed=currentWord.split("").reverse().join("").toLowerCase();
-  if(word[0].toLowerCase()!==lastChar){message.textContent="❌ Wrong!";return;}
-  if(word.toLowerCase()===currentWord.toLowerCase()){message.textContent="❌ Repeat!";return;}
-  if(word.toLowerCase()===reversed){message.textContent="❌ Reversed!";return;}
-  if(usedWords.map(w=>w.toLowerCase()).includes(word.toLowerCase())){message.textContent="❌ Already used!";return;}
+  if(word[0].toLowerCase()!==lastChar){alert('❌ Wrong! Start over'); startGame(); return;}
+  if(word.toLowerCase()===currentWord.toLowerCase()){alert('❌ Repeat! Start over'); startGame(); return;}
+  if(word.toLowerCase()===reversed){alert('❌ Reversed! Start over'); startGame(); return;}
+  if(usedWords.map(w=>w.toLowerCase()).includes(word.toLowerCase())){alert('❌ Already used! Start over'); startGame(); return;}
   usedWords.push(word);
   currentWord=word;
   document.getElementById('wordDisplay').textContent=`Your word: ${currentWord}`;
-  input.value=''; message.textContent='';
+  input.value=''; 
   setTimeout(aiTurn,500);
 }
 
@@ -177,8 +191,9 @@ function aiTurn(){
   if(wordScore>=6){ setTimeout(startTicTacToe,800);}
 }
 
+// ==== TIC TAC TOE ====
 function startTicTacToe(){
-  stage='tic tac toe';
+  clearAllTimers();
   const container=document.getElementById('gameContainer');
   container.innerHTML=`
     <h1></h1>
@@ -202,69 +217,9 @@ function startTicTacToe(){
   startTimer();
 }
 
-function renderBoard(){
-  const boardDiv=document.getElementById('board');
-  boardDiv.innerHTML='';
-  board.forEach((cell,index)=>{
-    const div=document.createElement('div');
-    div.className='cell'; div.textContent=cell;
-    if(cell==='') div.style.backgroundColor=randomColor();
-    div.onclick=()=>playerMove(index);
-    boardDiv.appendChild(div);
-  });
-}
-
-function randomColor(){const colors=["#e57373","#f06292","#ba68c8","#9575cd","#7986cb","#64b5f6","#4dd0e1","#4db6ac","#81c784","#aed581","#fff176","#ffd54f","#ffb74d","#ff8a65"];return colors[Math.floor(Math.random()*colors.length)];}
-
-function startTimer(){clearInterval(timerInterval); timer=6; updateTimerUI(); timerInterval=setInterval(()=>{timer--; updateTimerUI(); if(timer===0){clearInterval(timerInterval); aiMove();}},1000);}
-
-function updateTimerUI(){const div=document.getElementById('timer'); div.textContent=`⏳ Time left: ${timer}`; div.className=''; if(timer>=4) div.classList.add('timer-green'); else if(timer>=2) div.classList.add('timer-yellow'); else div.classList.add('timer-red');}
-
-function playerMove(index){
-  if(board[index]!=='') return;
-  board[index]='X';
-  clearInterval(timerInterval);
-  renderBoard();
-  if(checkWinner('X')){
-    gameOver=true; ticScore.player++; document.getElementById('message').textContent="You win! 🎉"; updateScore();
-    if(ticScore.player>=3){ setTimeout(startMathChallenge,800); } else { setTimeout(resetBoard,800); }
-    return;
-  }
-  if(board.every(c=>c!=='')){ gameOver=true; ticScore.draw++; updateScore(); setTimeout(resetBoard,800); return; }
-  setTimeout(aiMove,400);
-}
-
-function aiMove(){
-  if(gameOver) return;
-  const level=document.getElementById('levelSelect').value;
-  let move;if(level==='easy') move=randomMove(); else if(level==='medium') move=mediumMove(); else move=hardMove();
-  board[move]='O'; renderBoard();
-  if(checkWinner('O')){
-    gameOver=true; ticScore.ai++; document.getElementById('message').textContent="AI wins! 🤖"; updateScore();
-    if(ticScore.ai>=3){ setTimeout(startMathChallenge,800); } else { setTimeout(resetBoard,800); }
-    return;
-  }
-  if(board.every(c=>c!=='')){ gameOver=true; ticScore.draw++; updateScore(); setTimeout(resetBoard,800); return; }
-  startTimer();
-}
-
-function resetBoard(){
-  board=['','','','','','','','',''];
-  gameOver=false;
-  document.getElementById('message').textContent='';
-  renderBoard();
-  startTimer();
-}
-
-function randomMove(){const empty=board.map((v,i)=>v===''?i:null).filter(v=>v!==null); return empty[Math.floor(Math.random()*empty.length)];}
-function mediumMove(){for(let i=0;i<9;i++){if(board[i]===''){board[i]='O'; if(checkWinner('O')) return i; board[i]='';}} for(let i=0;i<9;i++){if(board[i]===''){board[i]='X'; if(checkWinner('X')){board[i]=''; return i;} board[i]='';}} if(board[4]==='') return 4; const corners=[0,2,6,8].filter(i=>board[i]===''); if(corners.length) return corners[Math.floor(Math.random()*corners.length)]; return randomMove();}
-function hardMove(){let bestScore=-Infinity; let move; for(let i=0;i<9;i++){if(board[i]===''){board[i]='O'; let score=minimax(board,0,false); board[i]=''; if(score>bestScore){bestScore=score; move=i;}}} return move;}
-function minimax(b,depth,isMax){if(checkWinner('O')) return 10-depth; if(checkWinner('X')) return depth-10; if(b.every(c=>c!=='')) return 0; if(isMax){let best=-Infinity; for(let i=0;i<9;i++){if(b[i]===''){b[i]='O'; best=Math.max(best,minimax(b,depth+1,false)); b[i]='';}} return best;} else{let best=Infinity; for(let i=0;i<9;i++){if(b[i]===''){b[i]='X'; best=Math.min(best,minimax(b,depth+1,true)); b[i]='';}} return best;}}
-function checkWinner(p){const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]; return wins.some(w=>w.every(i=>board[i]===p));}
-function updateScore(){document.getElementById('scoreboard').textContent=`Player: ${ticScore.player} | AI: ${ticScore.ai} | Draws: ${ticScore.draw}`;}
-
+// ==== MATH CHALLENGE ====
 function startMathChallenge(){
-  stage='math';
+  clearAllTimers();
   const container=document.getElementById('gameContainer');
   container.innerHTML=`
     <h1></h1>
@@ -290,7 +245,7 @@ function startMathTimer(){
     if(mathTimer<=0){
       clearInterval(mathTimerInterval);
       alert("⏰ Time's up! Starting over.");
-      startWordChain();
+      startGame();
     }
   },1000);
 }
@@ -304,8 +259,6 @@ function updateMathTimerUI(){
   else if(mathTimer>=4) div.classList.add('timer-yellow');
   else div.classList.add('timer-red');
 }
-
-function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
 
 function generateTask(){
   const pattern=randomInt(1,3);
@@ -322,16 +275,79 @@ function generateTask(){
 function checkAnswer(){
   const input=document.getElementById("answer");
   if(input.value==="") return;
-  const value=Number(input.value);
-  if(value===correctAnswer){
+  if(Number(input.value)===correctAnswer){
     document.getElementById('message').textContent="✅ Correct!";
     setTimeout(generateTask,700);
   } else{
-    clearInterval(mathTimerInterval);
+    clearAllTimers();
     alert(`❌ Wrong! Correct was ${correctAnswer}. Starting over.`);
-    startWordChain();
+    startGame();
   }
 }
+
+// ==== TIMER UND BOARD HELPER ====
+function clearAllTimers(){
+  clearInterval(timerInterval);
+  clearInterval(mathTimerInterval);
+}
+
+function randomInt(min,max){return Math.floor(Math.random()*(max-min+1))+min;}
+
+// ===== TIC TAC TOE HELPER =====
+function renderBoard(){
+  const boardDiv=document.getElementById('board');
+  if(!boardDiv) return;
+  boardDiv.innerHTML='';
+  board.forEach((cell,index)=>{
+    const div=document.createElement('div');
+    div.className='cell'; div.textContent=cell;
+    if(cell==='') div.style.backgroundColor=randomColor();
+    div.onclick=()=>playerMove(index);
+    boardDiv.appendChild(div);
+  });
+}
+
+function randomColor(){const colors=["#e57373","#f06292","#ba68c8","#9575cd","#7986cb","#64b5f6","#4dd0e1","#4db6ac","#81c784","#aed581","#fff176","#ffd54f","#ffb74d","#ff8a65"];return colors[Math.floor(Math.random()*colors.length)];}
+
+function startTimer(){clearInterval(timerInterval); timer=6; updateTimerUI(); timerInterval=setInterval(()=>{timer--; updateTimerUI(); if(timer===0){clearInterval(timerInterval); aiMove();}},1000);}
+
+function updateTimerUI(){const div=document.getElementById('timer'); if(!div) return; div.textContent=`⏳ Time left: ${timer}`; div.className=''; if(timer>=4) div.classList.add('timer-green'); else if(timer>=2) div.classList.add('timer-yellow'); else div.classList.add('timer-red');}
+
+function playerMove(index){
+  if(board[index]!=='') return;
+  board[index]='X';
+  clearInterval(timerInterval);
+  renderBoard();
+  if(checkWinner('X')){
+    gameOver=true; ticScore.player++; updateScore();
+    if(ticScore.player>=3){ setTimeout(startMathChallenge,800); } else { setTimeout(resetBoard,800); }
+    return;
+  }
+  if(board.every(c=>c!=='')){ gameOver=true; ticScore.draw++; updateScore(); setTimeout(resetBoard,800); return; }
+  setTimeout(aiMove,400);
+}
+
+function aiMove(){
+  if(gameOver) return;
+  const level=document.getElementById('levelSelect')?.value;
+  let move;if(level==='easy') move=randomMove(); else if(level==='medium') move=mediumMove(); else move=hardMove();
+  board[move]='O'; renderBoard();
+  if(checkWinner('O')){
+    gameOver=true; ticScore.ai++; updateScore();
+    if(ticScore.ai>=3){ setTimeout(startMathChallenge,800); } else { setTimeout(resetBoard,800); }
+    return;
+  }
+  if(board.every(c=>c!=='')){ gameOver=true; ticScore.draw++; updateScore(); setTimeout(resetBoard,800); return; }
+  startTimer();
+}
+
+function resetBoard(){board=['','','','','','','','','']; gameOver=false; renderBoard(); startTimer();}
+function randomMove(){const empty=board.map((v,i)=>v===''?i:null).filter(v=>v!==null); return empty[Math.floor(Math.random()*empty.length)];}
+function mediumMove(){for(let i=0;i<9;i++){if(board[i]===''){board[i]='O'; if(checkWinner('O')) return i; board[i]='';}} for(let i=0;i<9;i++){if(board[i]===''){board[i]='X'; if(checkWinner('X')){board[i]=''; return i;} board[i]='';}} if(board[4]==='') return 4; const corners=[0,2,6,8].filter(i=>board[i]===''); if(corners.length) return corners[Math.floor(Math.random()*corners.length)]; return randomMove();}
+function hardMove(){let bestScore=-Infinity; let move; for(let i=0;i<9;i++){if(board[i]===''){board[i]='O'; let score=minimax(board,0,false); board[i]=''; if(score>bestScore){bestScore=score; move=i;}}} return move;}
+function minimax(b,depth,isMax){if(checkWinner('O')) return 10-depth; if(checkWinner('X')) return depth-10; if(b.every(c=>c!=='')) return 0; if(isMax){let best=-Infinity; for(let i=0;i<9;i++){if(b[i]===''){b[i]='O'; best=Math.max(best,minimax(b,depth+1,false)); b[i]='';}} return best;} else{let best=Infinity; for(let i=0;i<9;i++){if(b[i]===''){b[i]='X'; best=Math.min(best,minimax(b,depth+1,true)); b[i]='';}} return best;}}
+function checkWinner(p){const wins=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]; return wins.some(w=>w.every(i=>board[i]===p));}
+function updateScore(){document.getElementById('scoreboard')?.textContent=`Player: ${ticScore.player} | AI: ${ticScore.ai} | Draws: ${ticScore.draw}`;}
 </script>
 </body>
 </html>
