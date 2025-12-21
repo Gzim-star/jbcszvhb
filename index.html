@@ -243,19 +243,18 @@ function aiTurn(){
   let possible = wordList.filter(
     w => w[0].toLowerCase() === lastChar && !usedWords.includes(w)
   );
-
+  // 🤖 keine sichtbaren Wörter → Brain Hint
   if(possible.length === 0){
+    setTimeout(showWordChainHint, 5000);
+    return;
+  }
+  
     const remaining = wordList.filter(w => !usedWords.includes(w));
     if(remaining.length > 0){
       const r = remaining[Math.floor(Math.random() * remaining.length)];
       usedWords.push(r);
       currentWord = r;
       document.getElementById('wordDisplay').textContent = currentWord;
- // 🤖 keine sichtbaren Wörter → Brain Hint
-  if(possible.length === 0){
-    setTimeout(showWordChainHint, 5000);
-    return;
-  }
     }
     return;
   }
