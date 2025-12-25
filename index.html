@@ -29,7 +29,7 @@ body {
   right: 20px;
   background: none;
   border: none;
-  color: white;
+  color: #d50000;
   font-size: 28px;
   cursor: pointer;
   z-index: 1000;
@@ -53,11 +53,11 @@ body {
   border-radius: 12px;
   width: 80%;
   max-width: 400px;
-  color: white;
+  color: #d50000;
   text-align: left;
 }
 .close {
-  color: white;
+  color: #d50000;
   float: right;
   font-size: 28px;
   font-weight: bold;
@@ -136,7 +136,7 @@ tipButton.onclick = () => {
 
   else if(stage === 'word') tipText = `
       <p>Word Chain Tips:</p>
-    <lu>
+    <ul>
       <li>Think of the last letter</li>
       <li>Find the Answer</li>
       <li>Longer or smarter</li>
@@ -145,7 +145,7 @@ tipButton.onclick = () => {
 
   else if(stage === 'tic') tipText = `
       <p>Tic-Tac-Toe Tips:</p>
-    <lu>
+    <ul>
       <li>Get three to win.</li>
       <li>Block your opponent.</li>
       <li>Center is powerful.</li>
@@ -155,24 +155,20 @@ tipButton.onclick = () => {
 
   else if(stage === 'math') tipText = `
       <p>Math Challenge Tips:</p>
-    <lu>
-      <li>Follow order</li>
-      <li>of operations</li>
-      <li>Solve quickly</li>
-      <li>time is running!</li>
-      <li>Correct answers</li>
-      <li>let you advance</li>
+    <ul>
+      <li>Follow order of operations...</li>
+      <li>Solve quickly time is running!</li>
+      <li>Correct answers let you advance</li>
       <li>Wrong answers,send you back.</li>
     </ul>
   `;
 
   else if(stage === 'chromatic') tipText = `
       <p>Chromatic Trial Tips:</p>
-    <lu>
+    <ul>
       <li>Make all tiles the same color.</p>
       <li>Focus on one color.</li>
-      <li>Act fast,</li>
-      <li>or grid will reset.</li>
+      <li>Act fast,or grid will reset.</li>
     </ul>
   `;
   tipModal.querySelector('p').innerHTML = tipText;
