@@ -128,13 +128,9 @@ button:hover { background: #00000000; }
     // ========================== TIP BUTTON LOGIC ==========================
 const tipButton = document.getElementById('tipButton');
 const tipModal = document.getElementById('tipModal');
+const closeBtn = document.querySelector('.close');
 
-tipButton.onclick = () => {
-// 🔁 Toggle (öffnen / schließen)
-  if (tipModal.style.display === 'block') {
-    tipModal.style.display = 'none';
-    return;
-  }
+  tipButton.onclick = () => {
   let tipText = '';
   if(stage === 'start') tipText = `
 BrainTrials:
