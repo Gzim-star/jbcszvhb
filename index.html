@@ -128,30 +128,66 @@ const closeBtn = document.querySelector('.close');
 tipButton.onclick = () => {
   let tipText = '';
   if(stage === 'start') tipText = `
-    <p>BrainTrials:<p>
-    <p>BrainTrials is a deterministic, rule-based cognitive system designed to validate structured human input under real-time constraints.</p>
+   <p><strong>BrainTrials</strong></p>
 
-<p>The system does not rely on dictionaries, artificial intelligence, machine learning, or probabilistic guessing.</p>
-<p>All outcomes are derived exclusively from explicit rules, state transitions, and input validation logic.</p>
+<p>
+BrainTrials is a deterministic, rule-based cognitive system designed to validate
+structured human input under real-time constraints.
+</p>
 
-<p>Each interaction is processed synchronously, ensuring immediate feedback without latency, freezing, or hidden computation.</p>
-<p>Invalid inputs are rejected through rule violations rather than semantic interpretation.</p>
+<p>
+The system does not rely on dictionaries, artificial intelligence, machine learning,
+or probabilistic guessing.
+All outcomes are derived exclusively from explicit rules, state transitions,
+and input validation logic.
+</p>
 
-<p>The architecture enforces progression through constrained stages, where advancement depends on consistency, pattern recognition, and temporal accuracy.</p>
-<p>This design results in a system that is resistant to brute-force input, random noise, and exploit attempts.</p>
+<p>
+Each interaction is processed synchronously, ensuring immediate feedback without
+latency, freezing, or hidden computation.
+Invalid inputs are rejected through rule violations rather than semantic interpretation.
+</p>
 
-<p>BrainTrials functions as a closed logical environment: correctness emerges from structure, not from stored knowledge.</p>
-<p>All challenges are deterministic and reproducible, providing a consistent and fair testing arena for users.</p>
+<p>
+The architecture enforces progression through constrained stages, where advancement
+depends on consistency, pattern recognition, and temporal accuracy.
+This design results in a system that is resistant to brute-force input,
+random noise, and exploit attempts.
+</p>
 
-<p>The system implements multiple game modes—Word Chain, Tic-Tac-Toe, Math Challenge, and Chromatic Trial—each designed to test a different aspect of cognitive processing, including memory, pattern recognition, strategic planning, and rapid decision-making.</p>
+<p>
+BrainTrials functions as a closed logical environment:
+correctness emerges from structure, not from stored knowledge.
+All challenges are deterministic and reproducible.
+</p>
 
-<p>Scoring and progression are strictly governed by rules: success depends on precise input, temporal accuracy, and pattern recognition rather than guesswork or probabilistic methods. Users cannot bypass challenges using brute-force or random strategies.</p>
+<p>
+The system implements multiple game modes:
+Word Chain, Tic-Tac-Toe, Math Challenge, and Chromatic Trial —
+each testing different cognitive abilities such as memory,
+pattern recognition, strategic planning, and rapid decision-making.
+</p>
 
-<p>BrainTrials is optimized for instantaneous feedback, ensuring that each action triggers an immediate and deterministic response. The system’s internal logic prevents hidden operations, caching, or delayed evaluation, guaranteeing transparency in every interaction.</p>
+<p>
+Scoring and progression are strictly governed by rules.
+Success depends on precision, timing, and logical consistency —
+not on guesswork or probability.
+</p>
 
-<p>Tips: Pay attention to the structure of the system. Logical consistency, awareness of patterns, and strategic foresight are essential to advance. Each game mode builds upon the principles of the previous, requiring both analytical thinking and adaptive strategy.</p>
-    <p>You are entering the arena of challenges!</p>
-    <p>Only those who think cleverly, react quickly, and recognize patterns can reach the end.</p>
+<p>
+BrainTrials is optimized for instantaneous feedback.
+Every action triggers an immediate and deterministic response,
+with no hidden operations or delayed evaluation.
+</p>
+
+<p>
+<strong>Tip:</strong> Pay attention to structure.
+Logical consistency, pattern awareness, and strategic foresight
+are essential to advance.
+</p>
+
+<p>You are entering the arena of challenges.</p>
+<p>Only those who think clearly, react quickly, and recognize patterns will reach the end.</p> 
   `;
 
   else if(stage === 'word') tipText = `
