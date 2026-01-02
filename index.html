@@ -292,31 +292,7 @@ function showWordError(text) {
     message.textContent = "";
   }, 1200);
 }
-  // ================== BrainTrials Access ==================
-  const BT_PASSWORD = "1234"; // dein Passwort
 
-  window.onload = () => {
-    const startScreen = document.getElementById('startScreen');
-    if (startScreen) startScreen.style.display = 'none';
-
-    let granted = false;
-
-    while (!granted) {
-      const input = prompt("Enter password to start BrainTrials:");
-
-      if (input === null) {
-        // Nutzer bricht ab → Seite bleibt leer
-        return;
-      }
-
-      if (input === BT_PASSWORD) {
-        granted = true;
-        if (startScreen) startScreen.style.display = 'flex';
-      } else {
-        alert("Wrong password");
-      }
-    }
-  };
     // ========================== WORD CHAIN ==========================
 function startWordChain(){
   stage='word';
