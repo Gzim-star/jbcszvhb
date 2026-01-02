@@ -105,51 +105,26 @@ button:hover { background: #00000000; }
 .modal.open {
   display: block;
 }
-/* ===== PASSWORD OVERLAY ===== */
-#passwordOverlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.95);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 4000;
-  color: white;
-  font-family: 'Press Start 2P', cursive;
-}
+  // ================== Passwort-Abfrage ==================
+  let accessGranted = false;
 
-#passwordOverlay input {
-  padding: 12px 20px;
-  font-size: 1em;
-  border-radius: 10px;
-  border: none;
-  margin-bottom: 10px;
-  text-align: center;
-}
+  function askPassword() {
+    const pw = prompt("Enter password to start BrainTrials:");
+    if (pw === "1234") { // <-- hier dein Passwort
+      accessGranted = true;
+      document.getElementById('startScreen').style.display = 'flex';
+    } else {
+      alert("Wrong password! Try again.");
+      askPassword(); // erneut fragen
+    }
+  }
 
-#passwordOverlay button {
-  padding: 12px 25px;
-  font-size: 1em;
-  border-radius: 10px;
-  border: none;
-  background: #64b5f6;
-  color: white;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-#passwordOverlay button:hover {
-  background: #42a5f5;
-}
-
-#passwordError {
-  margin-top: 8px;
-  color: #ff5252;
-  font-size: 0.8em;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
+  // Beim Laden der Seite: Flow-Bild verstecken & Passwort fragen
+  window.onload = () => {
+    const startScreen = document.getElementById('startScreen');
+    if(startScreen) startScreen.style.display = 'none'; // Flow-Bild erstmal verstecken
+    askPassword(); // Passwort-Abfrage starten
+  };
   #startScreen {
   position: fixed;
   inset: 0;
@@ -164,18 +139,10 @@ button:hover { background: #00000000; }
   height: auto;
   cursor: pointer;
 }
-
 </style>
 </head>
 <body>
-  <!-- PASSWORD OVERLAY -->
-  <div id="passwordOverlay">
-    <input type="password" id="passwordInput" placeholder="Enter password">
-    <button id="passwordBtn">Enter</button>
-    <div id="passwordError">Wrong password!</div>
-  </div>
-
- 
+  
  <div id="startScreen">
   <img src="IMG_1244.jpeg" alt="BrainTrials Logo">
 </div>
@@ -333,7 +300,6 @@ let mathTimer=30, mathTimerInterval;
 let lastPlayerClick = 0; // Zeit des letzten Klicks
 const clickCooldown = 300; // 300 ms zwischen erlaubten Klicks
 function showWordError(text) {
- 
   const message = document.getElementById('message');
   if (!message) return;
 
@@ -344,32 +310,6 @@ function showWordError(text) {
     message.textContent = "";
   }, 1200);
 }
-
-// ===== PASSWORD CHECK =====
-const passwordOverlay = document.getElementById('passwordOverlay');
-const passwordInput = document.getElementById('passwordInput');
-const passwordBtn = document.getElementById('passwordBtn');
-const passwordError = document.getElementById('passwordError');
-
-const brainPassword = "1234"; // <- hier dein Passwort setzen
-
-function checkPassword() {
-  if(passwordInput.value === brainPassword){
-    passwordOverlay.style.display = "none";
-    document.getElementById('startScreen').style.display = 'flex';
-  } else {
-    passwordError.style.opacity = 1;
-    setTimeout(()=> passwordError.style.opacity = 0, 1500);
-    passwordInput.value = '';
-    passwordInput.focus();
-  }
-}
-
-passwordBtn.onclick = checkPassword;
-passwordInput.addEventListener('keyup', function(e){
-  if(e.key === 'Enter') checkPassword();
-});
-    
 // ========================== WORD CHAIN ==========================
 function startWordChain(){
   stage='word';
