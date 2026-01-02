@@ -290,6 +290,28 @@ function showWordError(text) {
     message.textContent = "";
   }, 1200);
 }
+
+  // ================== Passwort-Abfrage ==================
+  let accessGranted = false;
+
+  function askPassword() {
+    const pw = prompt("Enter password to start BrainTrials:");
+    if (pw === "1234") { // <-- hier dein Passwort
+      accessGranted = true;
+      document.getElementById('startScreen').style.display = 'flex';
+    } else {
+      alert("Wrong password! Try again.");
+      askPassword(); // erneut fragen
+    }
+  }
+
+  // Beim Laden der Seite: Flow-Bild verstecken & Passwort fragen
+  window.onload = () => {
+    const startScreen = document.getElementById('startScreen');
+    if(startScreen) startScreen.style.display = 'none'; // Flow-Bild erstmal verstecken
+    askPassword(); // Passwort-Abfrage starten
+  };
+</script>    
 // ========================== WORD CHAIN ==========================
 function startWordChain(){
   stage='word';
