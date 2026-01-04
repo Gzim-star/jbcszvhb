@@ -67,35 +67,7 @@ body {
 }
 .close:hover { color: #00000000; }
  
-<div id="welcomeHint" style="
-  position: absolute;
-  top: 60%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  font-family: 'Press Start 2P', cursive;
-  font-size: 1.8em;
-  color: white;
-  opacity: 0;
-  transition: opacity 0.5s;
-  z-index: 3002;
-"></div>
-  
-const hint = document.createElement('div');
-hint.textContent = "Welcome";
-hint.style.position = 'absolute';
-hint.style.top = '10%';
-hint.style.left = '50%';
-hint.style.transform = 'translateX(-50%)';
-hint.style.fontFamily = "'Press Start 2P', cursive";
-hint.style.fontSize = '2em';
-hint.style.color = 'white';
-hint.style.opacity = '0';
-hint.style.transition = 'opacity 0.5s';
- startScreen.appendChild(hint); 
-  setTimeout(() => {
-    hint.style.opacity = '1';
-  }, 5000);
-};
+
 h1 { font-size: 1.8em; margin-bottom: 20px; color: #808080; font-family: 'Press Start 2P', cursive; }
 #task, #wordDisplay { font-size: 1.4em; margin: 20px 0; min-height: 50px; font-family: 'Press Start 2P', cursive; word-break: keep-all; }
 #inputContainer { display: flex; flex-direction: column; align-items: center; }
@@ -148,16 +120,32 @@ button:hover { background: #00000000; }
   height: auto;
   cursor: pointer;
 }
+
 </style>
 </head>
 <body>
-  
+<div id="welcomeHint" style="
+  position: fixed;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.4em;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 4000;
+">
+  Welcome
+</div>  
  <div id="startScreen">
   <img src="IMG_1244.jpeg" alt="BrainTrials Logo">
 </div>
 <div id="gameContainer">
   <h1></h1>
-  <button onclick="startWordChain()">  START  </button>
+  <button id="startButton" onclick="startWordChain()" style="display:none;">
+  START
+</button>
   </div>
 
 <!-- Tip Button -->
@@ -178,7 +166,21 @@ button:hover { background: #00000000; }
 const tipButton = document.getElementById('tipButton');
 const tipModal = document.getElementById('tipModal');
 const closeBtn = document.querySelector('.close');
+const startScreen = document.getElementById('startScreen');
+const startButton = document.getElementById('startButton');
+const welcomeHint = document.getElementById('welcomeHint');
 
+startScreen.onclick = () => {
+  startScreen.style.display = 'none';
+
+  // Start-Button zeigen
+  startButton.style.display = 'block';
+
+  // Welcome nach 5 Sekunden
+  setTimeout(() => {
+    welcomeHint.style.opacity = '1';
+  }, 5000);
+};
 tipButton.onclick = () => {
   // 🔁 öffnen / schließen
   tipModal.classList.toggle('open');
