@@ -120,32 +120,7 @@ button:hover { background: #00000000; }
   height: auto;
   cursor: pointer;
 }
-.spark {
-  position: fixed;
-  top: 30%;
-  left: 110%;
-  font-size: 13px;
-  color: rgba(255,255,255,0.7);
-  text-shadow:
-    0 0 8px rgba(200,230,255,0.5),
-    0 0 16px rgba(120,180,255,0.25);
-  pointer-events: none;
-  animation: sparkDrift 6s ease-in-out forwards;
-}
 
-@keyframes sparkDrift {
-  0% {
-    transform: translate(0, 0) scale(0.8);
-    opacity: 0;
-  }
-  15% {
-    opacity: 1;
-  }
-  100% {
-    transform: translate(-120vw, 40vh) scale(1.1);
-    opacity: 0;
-  }
-}
 
 </style>
 </head>
@@ -741,30 +716,9 @@ function showChromaticWin(){
   }, 5000); // ⏱ nach 5 Sekunden zurück zum Start
 }
 
-let activeSpark = false;
 
-function spawnSpark() {
-  if (activeSpark) return;
-  activeSpark = true;
 
-  const spark = document.createElement("div");
-  spark.className = "spark";
-  spark.textContent = "✦";
-
-  spark.style.top = (20 + Math.random() * 40) + "%";
-
-  document.body.appendChild(spark);
-
-  spark.addEventListener("animationend", () => {
-    spark.remove();
-    activeSpark = false;
-  });
-}
-
-// 🌌 sehr selten
-setInterval(spawnSpark, 12000);
-
-  </script>
+</script>
 </body>
 </html>
 
