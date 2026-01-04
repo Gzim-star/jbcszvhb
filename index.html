@@ -67,6 +67,18 @@ body {
 }
 .close:hover { color: #00000000; }
  
+<div id="welcomeHint" style="
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 1.8em;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.5s;
+  z-index: 3002;
+"></div>
 const hint = document.createElement('div');
 hint.textContent = "Welcome";
 hint.style.position = 'absolute';
