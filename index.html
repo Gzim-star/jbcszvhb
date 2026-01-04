@@ -120,6 +120,15 @@ button:hover { background: #00000000; }
   height: auto;
   cursor: pointer;
 }
+ 
+  for(let i=0; i<5; i++){
+    const spark = document.createElement('div');
+    spark.className = 'spark';
+    spark.style.top = (e.clientY + (Math.random()*20-10)) + 'px';
+    spark.style.left = (e.clientX + (Math.random()*20-10)) + 'px';
+    document.body.appendChild(spark);
+    setTimeout(() => spark.remove(), 1000);
+  }
 
 </style>
 </head>
