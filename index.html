@@ -23,16 +23,6 @@ body {
   box-shadow: black; 
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
-#gameContainer button {
-  height: 48px;
-}#gameContainer {
-  transition: opacity 0.3s ease;
-
-}
-  #startButton {
-  position: relative;
-  top: 1;
-}
   #tipButton {
   position: fixed;
   bottom: 20px;
@@ -148,8 +138,7 @@ button:hover { background: #00000000; }
 </head>
 <body>
   
- 
-  <div id="startScreen">
+ <div id="startScreen">
   <!-- Schatz versteckt -->
 <div id="treasure" title="Click me!" style="
     position: absolute;
@@ -167,7 +156,7 @@ button:hover { background: #00000000; }
   "></div>
   <img src="IMG_1244.jpeg" alt="BrainTrials Logo">
 </div>
-  <div id="gameContainer" style="opacity:0; pointer-events:none;">
+  <div id="gameContainer">
   <h1></h1>
   <button onclick="startWordChain()">  START  </button>
 </div>
@@ -189,15 +178,7 @@ button:hover { background: #00000000; }
 const tipButton = document.getElementById('tipButton');
 const tipModal = document.getElementById('tipModal');
 const closeBtn = document.querySelector('.close');
-document.getElementById('startScreen').onclick = () => {
-  const startScreen = document.getElementById('startScreen');
-  const gameContainer = document.getElementById('gameContainer');
 
-  startScreen.style.display = 'none';   // Startscreen ausblenden
-  gameContainer.style.display = 'flex'; // Game-Container einblenden
-  gameContainer.style.opacity = '1';
-  gameContainer.style.pointerEvents = 'auto';
-};
 tipButton.onclick = () => {
   // 🔁 öffnen / schließen
   tipModal.classList.toggle('open');
