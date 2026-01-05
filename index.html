@@ -767,9 +767,9 @@ treasure.onclick = (e) => {
   msg.style.fontSize = '1.4em';
   msg.style.zIndex = '5000';
   msg.style.opacity = '0';
-  msg.style.transition = 'opacity 0.3s';
+  msg.style.transition = 'opacity 3s';
   document.body.appendChild(msg);
-  setTimeout(() => msg.style.opacity = '1', 3000);
+  setTimeout(() => msg.style.opacity = '1', 50);
   setTimeout(() => msg.remove(), 3000);
 
   // Schatz verschwinden
