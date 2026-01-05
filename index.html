@@ -22,14 +22,9 @@ body {
   padding: 20px;  border-radius: 15px;
   box-shadow: black; 
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-#gameContainer {
-  opacity: 0;
-  visibility: hidden;
-  transition: opacity 0.6s ease;
 }
-#gameContainer.visible {
-  opacity: 1;
-  visibility: visible;
+ #startButton {
+  display: none; /* versteckt den Button am Anfang */
 }
   #tipButton {
   position: fixed;
@@ -148,7 +143,7 @@ button:hover { background: #00000000; }
 <body>
   
  <div id="startScreen">
-   <!-- Schatz versteckt -->
+  <!-- Schatz versteckt -->
 <div id="treasure" title="Click me!" style="
     position: absolute;
     top: 46.1%;
@@ -165,13 +160,10 @@ button:hover { background: #00000000; }
   "></div>
   <img src="IMG_1244.jpeg" alt="BrainTrials Logo">
 </div>
-  <div>
+  <div id="gameContainer">
   <h1></h1>
- 
+ <button id="startButton" onclick="startWordChain()">START</button> 
 </div>
-
-
-<div id="gameContainer"></div>
   <!-- Tip Button -->
 <button id="tipButton">❕</button>
 
@@ -185,9 +177,7 @@ button:hover { background: #00000000; }
   <script>
   document.getElementById('startScreen').onclick = () => {
   document.getElementById('startScreen').style.display = 'none';
-    const game = document.getElementById('gameContainer');
-  game.classList.add('visible'); // ✅ NICHT display:flex
-  };
+};
     // ========================== TIP BUTTON LOGIC ==========================
 const tipButton = document.getElementById('tipButton');
 const tipModal = document.getElementById('tipModal');
@@ -790,25 +780,11 @@ treasure.onclick = (e) => {
   // Schatz verschwinden
   treasure.style.display = 'none';
 };
+// Button nach 6 Sekunden anzeigen
 setTimeout(() => {
-  const container = document.getElementById('gameContainer');
-  if (!document.getElementById('startButton')) {
-    const btn = document.createElement('button');
-    btn.id = 'startButton';
-    btn.textContent = 'START';
-    btn.onclick = startWordChain;
-
-    // ✨ sanft einblenden
-    btn.style.opacity = '0';
-    btn.style.transition = 'opacity 0.6s ease';
-
-    container.appendChild(btn);
-
-    requestAnimationFrame(() => {
-      btn.style.opacity = '1';
-    });
-  }
-}, 9000);
+  const btn = document.getElementById('startButton');
+  if(btn) btn.style.display = 'inline-block';
+}, 9000); // 6000ms = 6 Sekunden
 </script>
 </body>
 </html>
