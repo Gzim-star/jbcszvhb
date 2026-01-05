@@ -120,18 +120,18 @@ button:hover { background: #00000000; }
   cursor: pointer;
 }
 @keyframes sparkle {
-  0% { transform: scale(0.5); opacity: 1; }
-  50% { transform: scale(1.5); opacity: 0.8; }
+  0% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(0); opacity: 0; }
   100% { transform: scale(0); opacity: 0; }
 }
 .spark {
   position: absolute;
-  width: 5px;
-  height: 5px;
+  width: 1px;
+  height: 1px;
   border-radius: 50%;
   background: none;
   box-shadow: none;
-  animation: sparkle 1s ease-out forwards;
+  animation: none;
   pointer-events: none;
 }
 </style>
