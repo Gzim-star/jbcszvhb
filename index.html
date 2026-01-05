@@ -119,12 +119,12 @@ button:hover { background: #00000000; }
   height: auto;
   cursor: pointer;
 }
-@keyframes sparkle {
+@keyframes pulse {
   0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(0); opacity: 0; }
-  100% { transform: scale(0); opacity: 0; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
 }
-.spark {
+.puls {
   position: absolute;
   width: 6px;
   height: 6px;
@@ -152,7 +152,8 @@ button:hover { background: #00000000; }
     cursor: pointer;
     z-index: 4000;
     box-shadow: 0 0 10px 3px gold;
-"></div>
+    animation: pulse 2s infinite;
+  "></div>
   <img src="IMG_1244.jpeg" alt="BrainTrials Logo">
 </div>
   <div id="gameContainer">
