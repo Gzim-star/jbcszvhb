@@ -146,8 +146,7 @@ button:hover { background: #00000000; }
 <body>
   
  <div id="startScreen">
-
-   <!-- Schatz versteckt -->
+  <!-- Schatz versteckt -->
 <div id="treasure" title="Click me!" style="
     position: absolute;
     top: 46.1%;
@@ -179,21 +178,7 @@ button:hover { background: #00000000; }
   </div>
 </div>
   <script>
-  let startButtonTimerDone = false; // merkt, ob die 9 Sekunden schon abgelaufen sind
-
-window.onload = () => {
-  const btn = document.getElementById('startButton');
-  btn.style.opacity = '0';
-  btn.style.pointerEvents = 'none';
-
-  // Timer nur einmal beim Laden
-  setTimeout(() => {
-    btn.style.opacity = '1';
-    btn.style.pointerEvents = 'auto';
-    startButtonTimerDone = true;
-  }, 9000);
-};
-    document.getElementById('startScreen').onclick = () => {
+  document.getElementById('startScreen').onclick = () => {
   document.getElementById('startScreen').style.display = 'none';
 };
     // ========================== TIP BUTTON LOGIC ==========================
@@ -793,32 +778,18 @@ treasure.onclick = (e) => {
   msg.style.transition = 'opacity 15s';
   document.body.appendChild(msg);
   setTimeout(() => msg.style.opacity = '1', 50);
-  setTimeout(() => msg.remove(), 8000);
+  setTimeout(() => msg.remove(), 9000);
 
   // Schatz verschwinden
   treasure.style.display = 'none';
 };
-function handleStartScreenClick() {
-  const startScreen = document.getElementById('startScreen');
+setTimeout(() => {
   const btn = document.getElementById('startButton');
-
-  startScreen.style.display = 'none';
-
-  // Button nur zeigen, wenn Timer noch nicht abgelaufen
-  if (!startButtonTimerDone) {
+  if (btn) {
+    btn.style.visibility = 'visible';
     btn.style.opacity = '1';
-    btn.style.pointerEvents = 'auto';
-    startButtonTimerDone = true;
   }
-}
-
-document.getElementById('startScreen').onclick = handleStartScreenClick;
-
-document.getElementById('treasure').onclick = (e) => {
-  e.stopPropagation(); // Klick nicht doppelt zählen
-  e.currentTarget.style.display = 'none';
-  handleStartScreenClick();
-};
+}, 9000);
 </script>
 </body>
 </html>
