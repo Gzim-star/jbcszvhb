@@ -780,6 +780,8 @@ treasure.onclick = (e) => {
 // Button erst nach 9 Sekunden erstellen
 setTimeout(() => {
   const container = document.getElementById('gameContainer');
+  const oldBtn = document.getElementById('startButton');
+  if(!oldBtn){ // nur erstellen, wenn noch keiner existiert
   const btn = document.createElement('button');
   btn.id = 'startButton';
   btn.textContent = 'START';
