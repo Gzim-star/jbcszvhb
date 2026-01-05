@@ -24,6 +24,9 @@ body {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 #startButton {
+ padding: 12px 25px; font-size: 1em; border: none; border-radius: 10px; background: #808080; color: white; cursor: pointer; transition: all 9s; }
+button:hover { background: #00000000; }
+  
   position: fixed;
   visibility: hidden;
   opacity: 0;
@@ -165,8 +168,9 @@ button:hover { background: #00000000; }
 </div>
   <div id="gameContainer">
   <h1></h1>
-  <button id="startButton" onclick="startWordChain()">START</button> 
   </div>
+  <button id="startButton" onclick="startWordChain()">START</button> 
+  
     <!-- Tip Button -->
 <button id="tipButton">❕</button>
 
