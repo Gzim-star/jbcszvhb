@@ -189,10 +189,12 @@ button:hover { background: #00000000; }
 const tipButton = document.getElementById('tipButton');
 const tipModal = document.getElementById('tipModal');
 const closeBtn = document.querySelector('.close');
-const startScreen = document.getElementById('startScreen').onclick = () => {
-const startScreen = document.getElementById('startScreen').style.display = 'none';
-const gameContainer = document.getElementById('gameContainer').style.display = 'flex';
+document.getElementById('startScreen').onclick = () => {
+  const startScreen = document.getElementById('startScreen');
+  const gameContainer = document.getElementById('gameContainer');
 
+  startScreen.style.display = 'none';   // Startscreen ausblenden
+  gameContainer.style.display = 'flex'; // Game-Container einblenden
   gameContainer.style.opacity = '1';
   gameContainer.style.pointerEvents = 'auto';
 };
