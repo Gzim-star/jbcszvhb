@@ -24,12 +24,26 @@ body {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
 }
 #startButton {
- 
-  
-  position: fixed;
-  visibility: hidden;
+  position: fixed;       /* unabhängig vom Container */
+  top: 50%;              /* mittig vertikal */
+  left: 50%;             /* mittig horizontal */
+  transform: translate(-50%, -50%); /* zentriert */
+  background: #808080;
+  border: none;
+  color: white;
+  font-size: 32px;
+  padding: 15px 30px;
+  border-radius: 10px;
+  cursor: pointer;
   opacity: 0;
+  visibility: hidden;
   transition: opacity 0.6s ease;
+  z-index: 1000;
+}
+
+#startButton:hover {
+  background: #ffffff33;
+
 }
   #tipButton {
   position: fixed;
