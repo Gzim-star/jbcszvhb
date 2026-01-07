@@ -109,16 +109,7 @@ button:hover { background: #00000000; }
   border: 1px solid #808080; /* optional, Rahmen wie Rest des Spiels */
   border-radius: 5px; /* runde Ecken wie überall */
   padding: 2px 5px;   /* kleine Polsterung */
-  -webkit-appearance: none; /* Safari/Chrome */
-  -moz-appearance: none;    /* Firefox */
-  appearance: none;         /* Standard */
-  text-align: center;       /* Text zentrieren */
-  cursor: pointer;          /* wie Button */
-  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='10' viewBox='0 0 10 10' width='10' xmlns='http://www.w3.org/2000/svg'><polygon points='0,0 10,0 5,6'/></svg>");
-  background-repeat: no-repeat;
-  background-position: right 5px center;
-  background-size: 10px;
-  padding-right: 20px; /* Platz für Pfeil */
+
 }
   
   #grid { display: grid; grid-template-columns: repeat(3, 120px); grid-template-rows: repeat(3, 120px); gap: 12px; margin-top:20px; }
@@ -365,7 +356,7 @@ function startWordChain(){
   <div id="wordDisplay">Apple</div>
 
   <div id="inputContainer">
-    <input type="text" id="playerWord" placeholder="Your answer" autocomplete="off" autocapitalize="none">
+    <input type="text" id="playerWord" placeholder="" autocomplete="off" autocapitalize="none">
     <button onclick="playWord()"> Check </button>
   </div>
 
@@ -396,7 +387,7 @@ function playWord(){
   if(!word) return;
   // Mindestlänge
 if(word.length < 6){
-  showWordError("Wrong!");
+  showWordError("Wrong");
   return;
 }
 
@@ -404,16 +395,16 @@ if(word.length < 6){
   // Kein gleicher Endbuchstabe wie davor
 const lastTwo = currentWord.slice(-2).toLowerCase();
 if(word.slice(-1).toLowerCase() === lastTwo[0]){
-  showWordError("Wrong!");
+  showWordError("Wrong");
   return;
   
 }
   const lastChar=currentWord.slice(-1).toLowerCase();
   const reversed=currentWord.split("").reverse().join("").toLowerCase();
-  if(word[0].toLowerCase()!==lastChar){showWordError("Wrong!");return;}
-  if(word.toLowerCase()===currentWord.toLowerCase()){showWordError("Wrong!");return;}
-  if(word.toLowerCase()===reversed){showWordError("Reversed!");return;}
-  if(usedWords.map(w=>w.toLowerCase()).includes(word.toLowerCase())){showWordError("Already used!");return;}
+  if(word[0].toLowerCase()!==lastChar){showWordError("Wrong");return;}
+  if(word.toLowerCase()===currentWord.toLowerCase()){showWordError("Wrong");return;}
+  if(word.toLowerCase()===reversed){showWordError("Reversed");return;}
+  if(usedWords.map(w=>w.toLowerCase()).includes(word.toLowerCase())){showWordError("Already used");return;}
   usedWords.push(word); currentWord=word;
   document.getElementById('wordDisplay').textContent=``;
   input.value=''; message.textContent='';
@@ -534,7 +525,7 @@ function playerMove(i){
   if(checkWinner('X')){
     gameOver=true;
     ticScore.player++;
-    document.getElementById('message').textContent="You win!";
+    document.getElementById('message').textContent="You win";
     updateScore(); if(ticScore.player>=3){ setTimeout(startMathChallenge,800);}
     setTimeout(resetBoard,800);
     return;
@@ -551,7 +542,7 @@ function playerMove(i){
   // AI-Zug nach kurzer Verzögerung
   setTimeout(aiMove,400);
 }
-function aiMove(){if(gameOver)return; const lvl=document.getElementById('levelSelect').value; let move;if(lvl==='easy')move=randomMove(); else if(lvl==='medium')move=mediumMove(); else move=hardMove(); board[move]='O'; renderBoard(); if(checkWinner('O')){gameOver=true; ticScore.ai++; document.getElementById('message').textContent="AI wins!"; updateScore(); if(ticScore.ai>=3){ setTimeout(startMathChallenge,800);} else { setTimeout(resetBoard,800);} return;} if(board.every(c=>c!=='')){gameOver=true; ticScore.draw++; updateScore(); setTimeout(resetBoard,800); return;} startTimer();}
+function aiMove(){if(gameOver)return; const lvl=document.getElementById('levelSelect').value; let move;if(lvl==='easy')move=randomMove(); else if(lvl==='medium')move=mediumMove(); else move=hardMove(); board[move]='O'; renderBoard(); if(checkWinner('O')){gameOver=true; ticScore.ai++; document.getElementById('message').textContent="AI wins"; updateScore(); if(ticScore.ai>=3){ setTimeout(startMathChallenge,800);} else { setTimeout(resetBoard,800);} return;} if(board.every(c=>c!=='')){gameOver=true; ticScore.draw++; updateScore(); setTimeout(resetBoard,800); return;} startTimer();}
 function resetBoard(){board=['','','','','','','','','']; gameOver=false; document.getElementById('message').textContent=''; renderBoard(); startTimer();}
 function randomMove(){const e=board.map((v,i)=>v===''?i:null).filter(v=>v!==null); return e[Math.floor(Math.random()*e.length)];}
 function mediumMove(){for(let i=0;i<9;i++){if(board[i]===''){board[i]='O'; if(checkWinner('O'))return i; board[i]='';}} for(let i=0;i<9;i++){if(board[i]===''){board[i]='X'; if(checkWinner('X')){board[i]=''; return i;} board[i]='';}} if(board[4]==='') return 4; const c=[0,2,6,8].filter(i=>board[i]===''); if(c.length) return c[Math.floor(Math.random()*c.length)]; return randomMove();}
@@ -583,7 +574,7 @@ function startMathTimer(){clearInterval(mathTimerInterval); mathTimerInterval=se
 function checkMathAnswer(){const input=document.getElementById('answer'); if(input.value==='')return; clearInterval(mathTimerInterval); let userAnswer = Number(input.value);
 let correctRounded = Number(correctAnswer.toFixed(4));
 
-if(Math.abs(userAnswer - correctRounded) < 0.0001){correctMathCount++; document.getElementById('message').textContent='Correct!'; if(correctMathCount>=9){ setTimeout(startChromaticTrial,700); return;} setTimeout(()=>{mathTimer=30; generateMathTask(); startMathTimer();},700);} else{document.getElementById('message').textContent='Wrong!'; correctMathCount=0; setTimeout(restartGame,1000);}}
+if(Math.abs(userAnswer - correctRounded) < 0.0001){correctMathCount++; document.getElementById('message').textContent='Correct'; if(correctMathCount>=9){ setTimeout(startChromaticTrial,700); return;} setTimeout(()=>{mathTimer=30; generateMathTask(); startMathTimer();},700);} else{document.getElementById('message').textContent='Wrong'; correctMathCount=0; setTimeout(restartGame,1000);}}
 
 // ========================== CHROMATIC TRIAL ==========================
 const colorsCT=["#ba68c8",
