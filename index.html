@@ -109,6 +109,16 @@ button:hover { background: #00000000; }
   border: 1px solid #808080; /* optional, Rahmen wie Rest des Spiels */
   border-radius: 5px; /* runde Ecken wie überall */
   padding: 2px 5px;   /* kleine Polsterung */
+  -webkit-appearance: none; /* Safari/Chrome */
+  -moz-appearance: none;    /* Firefox */
+  appearance: none;         /* Standard */
+  text-align: center;       /* Text zentrieren */
+  cursor: pointer;          /* wie Button */
+  background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='10' viewBox='0 0 10 10' width='10' xmlns='http://www.w3.org/2000/svg'><polygon points='0,0 10,0 5,6'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 5px center;
+  background-size: 10px;
+  padding-right: 20px; /* Platz für Pfeil */
 }
   
   #grid { display: grid; grid-template-columns: repeat(3, 120px); grid-template-rows: repeat(3, 120px); gap: 12px; margin-top:20px; }
