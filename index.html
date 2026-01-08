@@ -31,10 +31,10 @@ body {
 
 }
 
-  #tipButton {
+#tipButton {
   position: fixed;
   bottom: 20px;
-  right: -60px; /* startet außerhalb */
+  right: -60px;
   background: none;
   border: none;
   color: white;
@@ -43,17 +43,25 @@ body {
   z-index: 2000;
 
   opacity: 0;
-  transform: translateX(0);
-  transition:
-    right 1.2s ease,
-    opacity 1.2s ease,
-    transform 0.6s ease;
+  perspective: 600px;
+  transition: right 1.2s ease, opacity 1.2s ease;
 }
 
-/* wenn aktiv */
 #tipButton.show {
-  right: 20px;      /* fährt rein */
+  right: 20px;
   opacity: 1;
+}
+
+#tipButton .cube-face {
+  display: inline-block;
+  transform-style: preserve-3d;
+  transition: transform 0.8s ease;
+}
+
+/* Dreh-Animation */
+#tipButton.rotate .cube-face {
+  transform: rotateY(180deg);
+  
 }
   #tipButton:hover { color: #00000000; }
 
@@ -206,7 +214,9 @@ button:hover { background: #00000000; }
  <button id="startButton" onclick="startWordChain()">START</button> 
 </div>
   <!-- Tip Button -->
-<button id="tipButton">◽️</button>
+<button id="tipButton">
+  <span class="cube-face">◽</span>
+</button>
 
 <!-- Modal für die Tipps -->
 <div id="tipModal" class="modal">
@@ -221,22 +231,23 @@ button:hover { background: #00000000; }
 };
     // ========================== TIP BUTTON LOGIC =========================
 const tipButton = document.getElementById('tipButton');
+const cubeFace = tipButton.querySelector('.cube-face');
 
-// Start: Quadrat von rechts
+// kommt von rechts
 setTimeout(() => {
   tipButton.classList.add('show');
 }, 500);
 
-// Verwandlung ◽ → !
+// Würfel-Drehung starten
 setTimeout(() => {
-  tipButton.style.transform = 'scale(1.2)';
-  tipButton.textContent = '❕';
+  tipButton.classList.add('rotate');
 }, 1600);
 
-// kleine Beruhigung
+// Symbol wechseln während der Drehung
 setTimeout(() => {
-  tipButton.style.transform = 'scale(1)';
+  cubeFace.textContent = '❕';
 }, 2000);
+
 const tipModal = document.getElementById('tipModal');
 const closeBtn = document.querySelector('.close');
 
