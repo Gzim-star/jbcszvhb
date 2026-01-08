@@ -64,17 +64,17 @@ body {
 }
 @keyframes cubeRoll {
   0% {
-    animation: roll(0deg) roll(0deg);
+    animation: roll(0deg) rotate(0deg);
     opacity: 0;
   }
   
   25% {
-    animation: roll(-20deg) roll(90deg);
+    animation: roll(-20deg) rotate(90deg);
     opacity: 1;
   }
   
   50% {
-    animation: roll(-40deg) roll(180deg);
+    animation: roll(-40deg) rotate(180deg);
   }
   
   75% {
@@ -82,7 +82,7 @@ body {
   }
   
   100% {
-    animation: roll(-80deg) roll(360deg);
+    animation: roll(-80deg) rotate(360deg);
   }
 }
 #tipButton:hover { color: #00000000; }
