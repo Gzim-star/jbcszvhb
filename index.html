@@ -43,46 +43,20 @@ body {
   z-index: 2000;
 
   opacity: 0;
-  perspective: 600px;
-  transition: right 1.2s ease, opacity 1.2s ease;
 }
 
 #tipButton.show {
-  right: 20px;
-  opacity: 1;
+  animation: rollIn 1.2s ease-out forwards;
 }
 
-#tipButton .cube-face {
-  display: roll;
-  transform-style: preserve-3d;
-  transition: transform 0.8s ease;
-}
-
-/* Dreh-Animation */
-#tipButton.roll .cube-face {
-  animation: cubeRoll 9s ease-in-out forwards;
-}
-@keyframes cubeRoll {
+@keyframes rollIn {
   0% {
-    animation: roll(0deg) rotate(0deg);
+    animation: rollIn(0) rotate(0deg);
     opacity: 0;
   }
-  
-  25% {
-    animation: roll(-20deg) rotate(90deg);
-    opacity: 1;
-  }
-  
-  50% {
-    animation: roll(-40deg) rotate(180deg);
-  }
-  
-  75% {
-    animation: roll(-60deg) rotate(270deg);
-  }
-  
   100% {
-    animation: roll(-80deg) rotate(360deg);
+    animation: rollIn(-80px) rotate(360deg);
+    opacity: 1;
   }
 }
 #tipButton:hover { color: #00000000; }
@@ -262,7 +236,7 @@ setTimeout(() => {
 
 // Würfel-Drehung starten
 setTimeout(() => {
-  tipButton.classList.add('roll');
+  tipButton.classList.add('rollIn');
 }, 1600);
 
 // Symbol wechseln während der Drehung
