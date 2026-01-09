@@ -235,20 +235,19 @@ button:hover { background: #00000000; }
 const tipButton = document.getElementById('tipButton');
 const cubeFace = tipButton.querySelector('.cube-face');
 
-// von rechts reinschieben
+// TIP BUTTON erst nach 6 Sekunden erscheinen lassen
 setTimeout(() => {
-  tipButton.classList.add('show');
-}, 1500);
+  tipButton.classList.add('show'); // Button kommt rein
 
-// 🎲 rollen
-setTimeout(() => {
+  //  Würfel langsam rollen
   tipButton.classList.add('roll');
-}, 2000);
 
-// ❕ nach dem Rollen
-setTimeout(() => {
-  cubeFace.textContent = '❕';
-}, 4000);
+  // ❕ nach dem Rollen
+  setTimeout(() => {
+    cubeFace.textContent = '❕';
+    tipButton.classList.remove('roll'); // Animation beenden
+  }, 2000); // Dauer des Rollen-Effekts (2 Sekunden)
+}, 6000); // ganze Sequenz startet nach 6 Sekunden
 
 
 const tipModal = document.getElementById('tipModal');
