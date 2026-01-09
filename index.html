@@ -41,9 +41,7 @@ body {
   font-size: 28px;
   cursor: pointer;
   z-index: 2000;
-
   opacity: 0;
-  perspective: 800px;
   transition: right 1.2s ease, opacity 1.2s ease;
 }
 
@@ -54,24 +52,21 @@ body {
 
 #tipButton .cube-face {
   display: inline-block;
-  transform-style: preserve-3d;
+  transform-origin: bottom center;
 }
 
-/* 🎲 WÜRFEL-ANIMATION */
+/* 🎲 echtes Rollen */
 #tipButton.rollin .cube-face {
-  animation: diceRoll 1.2s steps(1) forwards;
+  animation: cubeRoll 1.2s linear forwards;
 }
 
-@keyframes cubeRollIn {
-  0% {
-    animation: rollIn(0deg) rollIn(0deg);
-  }
-  50% {
-    animation: rollIn(90deg) rollIn(90deg);
-  }
-  100% {
-    animation: rollIn(180deg) rollIn(180deg);
-  }
+@keyframes cubeRoll {
+  0%   { transform: rotate(0deg); }
+  20%  { transform: rotate(-25deg); }
+  40%  { transform: rotate(0deg); }
+  60%  { transform: rotate(-25deg); }
+  80%  { transform: rotate(0deg); }
+  100% { transform: rotate(-25deg); }
 }
 #tipButton:hover { color: #00000000; }
 
