@@ -31,24 +31,37 @@ body {
 
 }
   
-.fragment {
-  position: absolute;
-  width: 6px;  /* kleine Partikel */
-  height: 6px;
-  background: gold;
-  border-radius: 50%;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: fragmentFly 1s forwards;
-  pointer-events: none;
-  z-index: 5000;
+/* === GLASS SPLINTER EFFECT === */
+.glass-button {
+  position: relative;
+  overflow: hidden;
 }
 
-@keyframes fragmentFly {
-  0%   { transform: translate(-50%, -50%) scale(1); opacity:1; }
-  50%  { transform: translate(calc(-50% + var(--x)), calc(-50% + var(--y))) scale(1.2); opacity:0.8; }
-  100% { transform: translate(calc(-50% + var(--x)*1.5), calc(-50% + var(--y)*1.5)) scale(0.5); opacity:0; }
+.glass-fragment {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+  transform: scale(0) rotate(0deg);
+  opacity: 0;
+  animation: glassMerge 1s forwards;
+  pointer-events: none;
+}
+
+@keyframes glassMerge {
+  0% {
+    transform: scale(0) rotate(-45deg);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2) rotate(15deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
 }
 
 #tipButton {
@@ -242,7 +255,7 @@ button:hover { background: #00000000; }
 </div>
   <div id="gameContainer">
   <h1></h1>
- <button id="startButton" onclick="startWordChain()">START</button> 
+ <button id="startButton" class="glass-button" onclick="startWordChain()">START</button> 
 </div>
   <!-- Tip Button -->
 <button id="tipButton">
@@ -895,20 +908,20 @@ setTimeout(() => {
   if (btn) {
   btn.style.opacity = '1';
   btn.style.pointerEvents = 'auto';
-       // === GLITZER/FRAGMENT-EFFEKT ===
-    const parts = 10; // Anzahl Partikel
-    for (let i = 0; i < parts; i++) {
+      // === Glass Splitter Effekt ===
+    const fragmentsCount = 6; // Anzahl der Splitter
+    for (let i = 0; i < fragmentsCount; i++) {
       const frag = document.createElement('div');
-      frag.className = 'fragment';
+      frag.className = 'glass-fragment';
       
-      // Zufällige Richtung
-      frag.style.setProperty('--x', (Math.random() * 100 - 50) + 'px');
-      frag.style.setProperty('--y', (Math.random() * 100 - 50) + 'px');
+      // Optional: leichte zufällige Drehung
+      const rot = Math.random() * 90 - 45; 
+      frag.style.transform = `scale(0) rotate(${rot}deg)`;
+      
+      // Animation verzögern für cooles Zusammenspiel
+      frag.style.animationDelay = `${i * 0.1}s`;
 
-      btn.appendChild(frag);
-
-      // Partikel nach Animation entfernen
-      frag.addEventListener('animationend', () => frag.remove());
+      btn.appendChild(frag);   
     }
   }
 }, 90000);
