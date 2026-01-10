@@ -65,7 +65,7 @@ body {
   75%  { transform: rotate(-270deg); }
   100% { transform: rotate(-360deg); }
 }
-#tipButton:hover { color: #00000000; }
+#tipButton:hover { color: inherit; }
 
 .modal {
   display: none;
@@ -179,6 +179,15 @@ button:hover { background: #00000000; }
   50% { transform: scale(1.2); opacity: 0.8; }
   100% { transform: scale(1); opacity: 1; }
 }
+  @keyframes softPulse {
+  0%   { transform: scale(1); opacity: 1; }
+  50%  { transform: scale(1.15); opacity: 0.85; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+#tipButton.pulsing .cube-face {
+  animation: softPulse 1.8s ease-in-out infinite;
+}
 .puls {
   position: absolute;
   width: 6px;
@@ -246,6 +255,8 @@ setTimeout(() => {
   setTimeout(() => {
     cubeFace.textContent = '❕';
     tipButton.classList.remove('roll'); // Animation beenden
+    // ❕ beginnt sanft zu pulsieren (Modal ist zu)
+    tipButton.classList.add('pulsing');
   }, 2000); // Dauer des Rollen-Effekts (2 Sekunden)
 }, 60000); // ganze Sequenz startet nach 6 Sekunden
 
@@ -256,7 +267,12 @@ const closeBtn = document.querySelector('.close');
 tipButton.onclick = () => {
   // 🔁 öffnen / schließen
   tipModal.classList.toggle('open');
-
+  // 🔄 Puls steuern
+  if (tipModal.classList.contains('open')) {
+    tipButton.classList.remove('pulsing'); // Modal offen → kein Puls
+  } else {
+    tipButton.classList.add('pulsing');    // Modal zu → Puls an
+  }
   // wenn geschlossen → nichts machen
   if (!tipModal.classList.contains('open')) return;
   let tipText = '';
