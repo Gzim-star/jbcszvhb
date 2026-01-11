@@ -236,7 +236,24 @@ button:hover { background: #00000000; }
     <p></p>
   </div>
 </div>
- <script>
+<!-- Welcome Video -->
+<video id="welcomeVideo"
+  muted
+  playsinline
+  preload="auto"
+  style="
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none;
+    z-index: 5500;
+    background: black;
+  ">
+  <source src="att.rkRSLL5Mml-8fxBVGSlF5fvI5jXOLBaq6ViBX-rcY2g.MP4" type="video/mp4">
+</video>
+  <script>
   document.getElementById('startScreen').onclick = () => {
   document.getElementById('startScreen').style.display = 'none';
 };
@@ -867,7 +884,24 @@ treasure.onclick = (e) => {
   document.body.appendChild(msg);
   setTimeout(() => msg.style.opacity = '1', 50);
   setTimeout(() => msg.remove(), 8000);
+// 🎬 Welcome-Video starten nach 3 Sekunden
+setTimeout(() => {
+  const video = document.getElementById('welcomeVideo');
+  if (video) {
+    video.style.display = 'block';
+    video.currentTime = 0;
+    video.play();
+  }
+}, 3000);
 
+// 🎬 Video nach 6 Sekunden wieder ausblenden
+setTimeout(() => {
+  const video = document.getElementById('welcomeVideo');
+  if (video) {
+    video.pause();
+    video.style.display = 'none';
+  }
+}, 9000); // 3s warten + 6s Video
  
 };
 setTimeout(() => {
