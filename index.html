@@ -471,7 +471,25 @@ if(word.length < 6){
   return;
 }
 
+function isReverseConstruct(input, originalWord) {
+  input = input.toLowerCase();
+  originalWord = originalWord.toLowerCase();
 
+  let o = originalWord.length - 1;
+
+  for (let i = 0; i < input.length; i++) {
+    if (o < 0) break;
+
+    if (input[i] !== originalWord[o]) {
+      return false; // Spieler bricht das Rückwärtsmuster → OK
+    }
+
+    o--;
+  }
+
+  return input.length >= 2; // mindestens 2 Buchstaben rückwärts erkannt
+}
+  
   // Kein gleicher Endbuchstabe wie davor
 const lastTwo = currentWord.slice(-2).toLowerCase();
 if(word.slice(-1).toLowerCase() === lastTwo[0]){
