@@ -491,11 +491,12 @@ if(uniqueChars.size === 1){
 }
 
   // Kein gleicher Endbuchstabe wie davor
-const lastTwo = currentWord.slice(-2).toLowerCase();
-if(word.slice(-1).toLowerCase() === lastTwo[0]){
+ const lastTen = currentWord.slice(-10).toLowerCase();
+const lastChar = word.slice(-1).toLowerCase();
+
+if(lastTen.includes(lastChar)){
   showWordError("Wrong");
   return;
-  
 }
   const lastChar=currentWord.slice(-1).toLowerCase();
   const reversed=currentWord.split("").reverse().join("").toLowerCase();
