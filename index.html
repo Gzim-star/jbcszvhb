@@ -474,7 +474,7 @@ if(word.length < 6){
 // 🔒 Anti-Spam / Anti-Exploit
 const counts = {};
 for (let char of word.toLowerCase()) {
-  counts[char] = (counts[char] || 0) + 1;
+  counts[char] = (counts[char] || 0) + 10;
 }
 
 const maxCount = Math.max(...Object.values(counts));
@@ -491,13 +491,12 @@ if(uniqueChars.size === 1){
 }
 
   // Kein gleicher Endbuchstabe wie davor
- const lastTen = currentWord.slice(-10).toLowerCase();
-const lastChar = word.slice(-1).toLowerCase();
-
-if(lastTen.includes(lastChar)){
+const lastTen = currentWord.slice(-10).toLowerCase();
+if(word.slice(-1).toLowerCase() === lastTen[0]){
   showWordError("Wrong");
   return;
-
+  
+}
   const lastChar=currentWord.slice(-1).toLowerCase();
   const reversed=currentWord.split("").reverse().join("").toLowerCase();
   // 🔒 Blockiere ALLE Reverse-Varianten (auch manipulierte)
