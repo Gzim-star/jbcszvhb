@@ -538,6 +538,19 @@ if (
   showWordError("Wrong");
   return;
 }
+  function triggerWordChainAlarmReset(delay = 800){
+  if(stage !== 'word') return; // 🔒 NUR WordChain
+
+  document.body.classList.add('alarm');
+
+  setTimeout(() => {
+    document.body.classList.remove('alarm');
+  }, 600);
+
+  setTimeout(() => {
+    restartGame();
+  }, delay);
+}
   if(word[0].toLowerCase()!==lastChar){showWordError("Wrong");return;}
   if(word.toLowerCase()===currentWord.toLowerCase()){showWordError("Wrong");return;}
   
@@ -609,23 +622,11 @@ function wrongAttempt(msg = "Wrong") {
   showWordError(msg);
   wrongAttempts++;
 
-  if(wrongAttempts >= 1){
-  triggerWordChainAlarmReset();
-  return;
+  if(wrongAttempts >= 4){ // nach 4 Versuchen
+    triggerWordChainAlarmReset();
+    return;
+  }
 }
-  function triggerWordChainAlarmReset(delay = 800){
-  if(stage !== 'word') return; // 🔒 NUR WordChain
-
-  document.body.classList.add('alarm');
-
-  setTimeout(() => {
-    document.body.classList.remove('alarm');
-  }, 600);
-
-  setTimeout(() => {
-    restartGame();
-  }, delay);
-}   
 
 // ========================== TIC TAC TOE ==========================
 function startTicTacToe(){
