@@ -586,7 +586,7 @@ function wrongAttempt(msg = "Wrong") {
   showWordError(msg);
   wrongAttempts++;
 
-  if(wrongAttempts >= 4){
+  if(wrongAttempts >= 1){
     setTimeout(restartGame, 800);
   }
 }
