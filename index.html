@@ -876,7 +876,9 @@ function restartGame(){
   clearInterval(chromaticTimerInterval);
   clearInterval(mathTimerInterval);
   clearTimeout(uniformTimeout);
-  clearIntervak(wrongAttempts = 0); // 🔑 WICHTIG
+  
+  wrongAttempts = 0; // 🔑 WICHTIG
+  
   // Variablen zurücksetzen
   stage = 'start';
   wordScore = 0;
