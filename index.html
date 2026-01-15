@@ -487,7 +487,7 @@ for (let c of word.toLowerCase()) {
   else break;
 }
 if (run >= 4) {
-  showWordError("Wrong");
+  wrongAttempt("Wrong");
   return;
 }
 
@@ -498,20 +498,20 @@ for (let c of word.toLowerCase()) {
 }
 const maxCount = Math.max(...Object.values(counts));
 if (maxCount / word.length >= 0.7) {
-  showWordError("Wrong");
+  wrongAttempt("Wrong");
   return;
 }
 
 // 4️⃣ Varianz
 if (new Set(word.toLowerCase()).size < 3) {
-  showWordError("Wrong");
+  wrongAttempt("Wrong");
   return;
 }
 
   // Kein gleicher Endbuchstabe wie davor
 const lastTwo = currentWord.slice(-2).toLowerCase();
 if(word.slice(-1).toLowerCase() === lastTwo[0]){
-  showWordError("Wrong");
+  wrongAttempt("Wrong");
   return;
   
 }
