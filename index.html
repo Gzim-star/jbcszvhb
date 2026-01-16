@@ -920,7 +920,8 @@ function restartGame(){
   // Flow-Bild anzeigen
   const startScreen = document.getElementById('startScreen');
   startScreen.style.display = 'flex';
-   
+  // 👑 Golden Point Inaktivitäts-Überwachung starten
+  startTreasureWatcher(); 
 }
 function showChromaticWin(){
   const text = document.getElementById('chromaticWinText');
@@ -933,8 +934,41 @@ function showChromaticWin(){
   }, 5000); // ⏱ nach 5 Sekunden zurück zum Start
 }
 const treasure = document.getElementById('treasure');
+// ===================== GOLDEN POINT INACTIVITY RESET =====================
+let treasureLastActive = Date.now();
+let treasureInactivityInterval = null;
 
+// Aktivität merken
+function resetTreasureInactivity() {
+  treasureLastActive = Date.now();
+}
+
+// Inaktivitäts-Check starten
+function startTreasureWatcher() {
+  stopTreasureWatcher(); // Sicherheit
+  treasureLastActive = Date.now();
+
+  treasureInactivityInterval = setInterval(() => {
+    // Nur prüfen, wenn StartScreen sichtbar ist
+    const startScreen = document.getElementById('startScreen');
+    if (!startScreen || startScreen.style.display === 'none') return;
+
+    if (Date.now() - treasureLastActive >= 60000) { // 60 Sekunden
+      stopTreasureWatcher();
+      restartGame(); // 👉 zurück zum Flow-Bild
+    }
+  }, 1000);
+}
+
+// Stoppen (z. B. wenn Spiel startet)
+function stopTreasureWatcher() {
+  if (treasureInactivityInterval) {
+    clearInterval(treasureInactivityInterval);
+    treasureInactivityInterval = null;
+  }
+}
 treasure.onclick = (e) => {
+ resetTreasureInactivity(); // 👈 HIER
   // Funken erzeugen
   for(let i=0; i<5; i++){
     const spark = document.createElement('div');
