@@ -255,12 +255,12 @@ button:hover { background: #00000000; }
 </video>
   <script>
   document.getElementById('startScreen').onclick = () => {
+  startFlowWatcher(); // 👁 System merkt: Aktivität
   document.getElementById('startScreen').style.display = 'none';
 };
     // ========================== TIP BUTTON LOGIC =========================
 const tipButton = document.getElementById('tipButton');
 const cubeFace = tipButton.querySelector('.cube-face');
-
 
 // TIP BUTTON erst nach 9 Sekunden erscheinen lassen
 setTimeout(() => {
@@ -418,6 +418,7 @@ let mathTimer=30, mathTimerInterval;
 let lastPlayerClick = 0; // Zeit des letzten Klicks
 const clickCooldown = 300; // 300 ms zwischen erlaubten Klicks
 let wrongAttempts = 0; // ✅ RICHTIG PLATZIERT
+let flowInactiveTimer = null;
 function showWordError(text) {
   const message = document.getElementById('message');
   if (!message) return;
@@ -429,7 +430,6 @@ function showWordError(text) {
     message.textContent = "";
   }, 1200);
 }
-
 // ========================== WORD CHAIN ==========================
 function startWordChain(){
   stage='word';
@@ -920,8 +920,7 @@ function restartGame(){
   // Flow-Bild anzeigen
   const startScreen = document.getElementById('startScreen');
   startScreen.style.display = 'flex';
-  //  Golden Point Inaktivitäts-Überwachung starten
-  startTreasureWatcher(); 
+  startFlowWatcher(); 
 }
 function showChromaticWin(){
   const text = document.getElementById('chromaticWinText');
@@ -929,46 +928,21 @@ function showChromaticWin(){
 
   text.style.opacity = "1";
 
+  function startFlowWatcher(){
+  clearTimeout(flowInactiveTimer);
+
+  flowInactiveTimer = setTimeout(() => {
+    restartGame();
+  }, 10000); // 60 Sekunden Inaktivität im Flow
+}
+  
   setTimeout(() => {
     restartGame();
   }, 5000); // ⏱ nach 5 Sekunden zurück zum Start
 }
 const treasure = document.getElementById('treasure');
-// ===================== GOLDEN POINT INACTIVITY RESET =====================
-let treasureLastActive = Date.now();
-let treasureInactivityInterval = null;
 
-// Aktivität merken
-function resetTreasureInactivity() {
-  treasureLastActive = Date.now();
-}
-
-// Inaktivitäts-Check starten
-function startTreasureWatcher() {
-  stopTreasureWatcher(); // Sicherheit
-  treasureLastActive = Date.now();
-
-  treasureInactivityInterval = setInterval(() => {
-    // Nur prüfen, wenn StartScreen sichtbar ist
-    const startScreen = document.getElementById('startScreen');
-    if (!startScreen || startScreen.style.display === 'none') return;
-
-    if (Date.now() - treasureLastActive >= 10000) { // 60 Sekunden
-      stopTreasureWatcher();
-      restartGame(); // 👉 zurück zum Flow-Bild
-    }
-  }, 200);
-}
-
-// Stoppen (z. B. wenn Spiel startet)
-function stopTreasureWatcher() {
-  if (treasureInactivityInterval) {
-    clearInterval(treasureInactivityInterval);
-    treasureInactivityInterval = null;
-  }
-}
 treasure.onclick = (e) => {
- resetTreasureInactivity(); // 👈 HIER
   // Funken erzeugen
   for(let i=0; i<5; i++){
     const spark = document.createElement('div');
@@ -1018,7 +992,6 @@ setTimeout(() => {
 }, 13000); // 3s warten + 6s Video
  
 };
-
 setTimeout(() => {
   const btn = document.getElementById('startButton');
   if (btn) {
