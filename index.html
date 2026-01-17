@@ -945,6 +945,7 @@ function showChromaticWin(){
 const treasure = document.getElementById('treasure');
 
 treasure.onclick = (e) => {
+    e.stopPropagation(); // ⛔ verhindert StartScreen-Klick
   // Funken erzeugen
   for(let i=0; i<5; i++){
     const spark = document.createElement('div');
