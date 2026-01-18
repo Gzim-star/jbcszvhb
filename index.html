@@ -899,47 +899,31 @@ function showChromaticMessage(){
     text.style.opacity = "0";
   }, 3000);
 }
-
 function restartGame(){
-  // ⏹ Alle Timer stoppen
-  clearInterval(timerInterval);
-  clearInterval(mathTimerInterval);
   clearInterval(chromaticTimerInterval);
+  clearInterval(mathTimerInterval);
   clearTimeout(uniformTimeout);
-  clearTimeout(hintTimeout);
-
-  // 🔑 ALLE wichtigen Variablen auf Anfang
-  wrongAttempts = 0;
-  gameOver = false;
-  solved = false;
-  correctMathCount = 0;
-
-  // Word Chain
+  
+  wrongAttempts = 0; // 🔑 WICHTIG
+  
+  // Variablen zurücksetzen
+  stage = 'start';
+  wordScore = 0;
+  ticScore = {player:0, ai:0, draw:0};
   currentWord = '';
   usedWords = [];
-  wordScore = 0;
-
-  // Tic-Tac-Toe
   board = [];
-  ticScore = {player:0, ai:0, draw:0};
-
-  // Math Challenge
+  gameOver = false;
   correctAnswer = 0;
+  correctMathCount = 0;
 
-  // Chromatic Trial
-  solved = false;
+  // Spiel ausblenden
+  document.getElementById('gameContainer').style.display = 'none';
 
-  // UI Status
-  uiStarted = false; // ← sehr wichtig, sonst startet Video/Tip-Button nicht richtig
-
-  // 🟢 Container leeren / ausblenden
-  const container = document.getElementById('gameContainer');
-  container.style.display = 'none';
-  container.innerHTML = '';
-
-  // 🟡 Flow-Bild und Treasure wieder anzeigen
+  // Flow-Bild anzeigen
   const startScreen = document.getElementById('startScreen');
   startScreen.style.display = 'flex';
+   
 }
 function showChromaticWin(){
   const text = document.getElementById('chromaticWinText');
@@ -955,14 +939,7 @@ const treasure = document.getElementById('treasure');
 
 treasure.onclick = (e) => {
   e.stopPropagation(); // 🔑 GANZ WICHTIG
-  // Startscreen ausblenden
-  const startScreen = document.getElementById('startScreen');
-  startScreen.style.display = 'none';
-  const container = document.getElementById('gameContainer');
-  container.style.display = 'flex';
 
-  // Reset UI Sequence damit Video & Tip Button neu starten
-  startUISequence(true); // true → erzwinge Neustart
   // Startscreen ausblenden
   document.getElementById('startScreen').style.display = 'none';
   document.getElementById('gameContainer').style.display = 'flex';
@@ -1017,8 +994,8 @@ setTimeout(() => {
  
 };
 
-function startUISequence(force=false) {
-  if(uiStarted && !force) return;
+function startUISequence() {
+  if (uiStarted) return; // 🔒 nur einmal
   uiStarted = true;
 
   // TIP BUTTON nach 30s
