@@ -255,7 +255,6 @@ button:hover { background: #00000000; }
 </video>
   <script>
   document.getElementById('startScreen').onclick = () => {
-  playIntroUI();
   document.getElementById('startScreen').style.display = 'none';
 };
     // ========================== TIP BUTTON LOGIC =========================
@@ -946,7 +945,6 @@ function showChromaticWin(){
 const treasure = document.getElementById('treasure');
 
 treasure.onclick = (e) => {
-    playIntroUI(); // ⭐ HIER ⭐
   // Funken erzeugen
   for(let i=0; i<5; i++){
     const spark = document.createElement('div');
@@ -1003,36 +1001,7 @@ setTimeout(() => {
   btn.style.pointerEvents = 'auto';
   }
 }, 90000);
-function playIntroUI() {
-  // ===== TIP BUTTON RESET =====
-  tipButton.classList.remove('show', 'roll', 'pulsing');
-  cubeFace.textContent = '◽️';
-  tipButton.style.right = '-60px';
-  tipButton.style.opacity = '0';
 
-  void tipButton.offsetWidth; // 🔁 REFLOW (WICHTIG)
-
-  tipButton.classList.add('show');
-  tipButton.classList.add('roll');
-
-  setTimeout(() => {
-    cubeFace.textContent = '❕';
-    tipButton.classList.remove('roll');
-    tipButton.classList.add('pulsing');
-  }, 2000);
-
-  // ===== START BUTTON RESET =====
-  const btn = document.getElementById('startButton');
-  btn.style.opacity = '0';
-  btn.style.pointerEvents = 'none';
-
-  void btn.offsetWidth; // 🔁 REFLOW
-
-  setTimeout(() => {
-    btn.style.opacity = '1';
-    btn.style.pointerEvents = 'auto';
-  }, 600);
-}
 </script>
 </body>
 </html>
