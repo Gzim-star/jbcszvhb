@@ -942,32 +942,7 @@ if (ghostRestartPending && !ghostVisible) {
   ghostVisible = true;
   }
 }
-function showGhostRestartTreasure(){
-  const ghost = document.getElementById('ghostRestartTreasure');
-  ghost.style.display = 'block';
-
-  ghost.onclick = () => {
-  ghost.onclick = (e) => {
-    e.stopPropagation();
-    globalRestartFromTreasure();
-  };
-}
- 
-
-
-function restartGameHard(){
-  uiStarted = false;
-  wrongAttempts = 0;
-  ghostRestartPending = false;
-
-  uiStarted = false;
-  
-  document.getElementById('startScreen').style.display = 'none';
-  document.getElementById('gameContainer').style.display = 'flex';
-
-  startUISequence();
-}
-  function showChromaticWin(){
+ function showChromaticWin(){
   const text = document.getElementById('chromaticWinText');
   if(!text) return;
 
@@ -978,26 +953,17 @@ function restartGameHard(){
   }, 5000); // ⏱ nach 5 Sekunden zurück zum Start
 }
 function globalRestartFromTreasure() {
-  // 👻 Ghost sauber zurücksetzen
   const ghost = document.getElementById('ghostRestartTreasure');
-  ghost.style.display = 'block';
-  ghost.onclick = (e) => {
-    e.stopPropagation();
-    globalRestartFromTreasure();
-  };
-}
-  // Startscreen aus
-  document.getElementById('startScreen').style.display = 'none';
+  ghost.style.display = 'none';
+  ghostRestartPending = false;
+  ghostVisible = false;
 
-  // Game sichtbar
+  document.getElementById('startScreen').style.display = 'none';
   document.getElementById('gameContainer').style.display = 'flex';
 
-  // UI neu starten
   uiStarted = false;
   startUISequence();
 }
-const treasure = document.getElementById('treasure');
-
 treasure.onclick = (e) => {
   e.stopPropagation(); // 🔑 GANZ WICHTIG
   globalRestartFromTreasure();
