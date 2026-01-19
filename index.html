@@ -940,7 +940,10 @@ function restartGame(){
 if (ghostRestartPending && !ghostVisible) {
   showGhostRestartTreasure();
   ghostVisible = true;
-  }
+ // 🔑 UI-Sequenz wieder erlauben
+  uiStarted = false;
+  startUISequence();
+ }
 }
  function showChromaticWin(){
   const text = document.getElementById('chromaticWinText');
