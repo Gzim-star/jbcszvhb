@@ -198,6 +198,23 @@ button:hover { background: #00000000; }
   animation: none;
   pointer-events: none;
 }
+#dimensionPortal {
+  position: fixed;
+  bottom: 12px;              /* über © */
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 10px;
+  color: #808080;
+  cursor: pointer;
+  opacity: 0.5;
+  z-index: 1000;
+  user-select: none;
+}
+
+#dimensionPortal:hover {
+  opacity: 1;
+}
 </style>
 </head>
 <body>
@@ -1061,11 +1078,22 @@ function startUISequence() {
     }
   }, 90000);
 }
+// ========================== DIMENSION PORTAL ==========================
+const dimensionPortal = document.getElementById('dimensionPortal');
 
+if (dimensionPortal) {
+  dimensionPortal.onclick = () => {
+    window.open('dimension.html', '_blank');
+    // oder:
+    // window.location.href = 'dimension.html';
+  };
+}
 
 
 
 </script>
+<!-- Dimension Portal -->
+<div id="dimensionPortal" title="Other Dimension">◉</div>
 </body>
 </html>
 
