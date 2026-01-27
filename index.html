@@ -434,13 +434,16 @@ are essential to advance.
       <li>Or grid will reset</li>
     </ul>
   `;
-  
-    else if(stage === 'statepuzzel') tipText = `
-      <p>Statepuzzel Tips:</p>
-    <ul>
-      <li>Somewhere is the solution</li>
-    </ul>
-  `;
+
+  else if(stage === 'statePuzzle') tipText = `
+  <p>State Puzzle Tip:</p>
+  <ul>
+    <li>Every click affects neighbors</li>
+    <li>The solution always exists</li>
+    <li>Look for symmetry</li>
+  </ul>
+`;
+
   tipModal.querySelector('p').innerHTML = tipText;
   
 };
