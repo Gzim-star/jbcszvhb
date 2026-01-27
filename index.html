@@ -198,52 +198,37 @@ button:hover { background: #00000000; }
   animation: none;
   pointer-events: none;
 }
-/* ===============================
-   STATE PUZZLE (isoliert)
-================================ */
-#statePuzzleWrapper {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transition: opacity 1.2s ease;
-}
-.game-wrapper.hide {
-  opacity: 0;
-  pointer-events: none;
-}
-#stateGrid {
-  display: grid;
-  grid-template-columns: repeat(12, min(24px, 6vw));
-  gird-template-rows: repeat(12, min(25px, 6vw));
-  gap: 3px;
-}
-
+/* Puzzle-Zellen */
 #statePuzzleWrapper .cell {
-  background: #777;
-  border-radius: 50%; /* ⚪ bleibt Kreis */
+  width: min(24px, 6vw);
+  height: min(24px, 6vw);
+  background: #808080;
+  border-radius: 50%;
   cursor: pointer;
+  transition: all 0.4s;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(13px + 0.5vmin);
+  font-size: calc(12px +0.5vmin);
   font-weight: bold;
   color: black;
-  user-select: none;
+  user-selet: none;
 }
- .cell.active {
-   opcity: 0.4;
+
+#statePuzzleWrapper .cell.active {
+  background: #777;
 }
 #solutionBtn {
-  matgin-top: 18px;
+  margin-top: 18px;
   padding: 12px 26px;
   font-size: 16px;
   background: #00000000;
   color: black;
   border: none;
   border-radius: 8px;
-  fonte-weight: bold;
+  font-weight: bold;
   cursor: pointer;
-  
+}
 </style>
 </head>
 <body>
@@ -978,6 +963,10 @@ function startStatePuzzle(){
 }
 function initStatePuzzle(){
   const grid = document.getElementById("grid");
+  const solutionBtn = document.getElementById("solutionBtn")
+  const wrapper = document.guerySelector(".game-wrapper")
+  
+  
   const size = 12;
   let state = [];
   let solved = false;
@@ -993,10 +982,20 @@ function initStatePuzzle(){
 
   function render(){
     grid.innerHTML = "";
+    
     state.forEach((v,i)=>{
       const cell = document.createElement("div");
       cell.className = "cell" + (v ? " active" : "");
-      cell.onclick = ()=>{ if(!solved) toggle(i); };
+      
+      const row = Math.floor(i / size);
+      const col = i % size;
+
+      if (row === 0) cell.textContent = col + 1;
+      else if (col === 0) cell.textContent = row + 1;
+      
+      cell.onclick = ()=>{ 
+        if(!solved) toggle(i); 
+      };
       grid.appendChild(cell);
     });
     checkSolved();
@@ -1005,7 +1004,10 @@ function initStatePuzzle(){
   function toggle(i){
     const n=[i,i-1,i+1,i-size,i+size];
     n.forEach(x=>{
-      if(x>=0 && x<size*size && Math.abs((x%size)-(i%size))<=1){
+      if(x>=0 && 
+         x<size*size && 
+         Math.abs((x%size)-(i%size))<=1
+        ) {
         state[x]^=1;
       }
     });
@@ -1016,6 +1018,14 @@ function initStatePuzzle(){
     if(solved) return;
     if(state.every(v=>v===0)){
       solved = true;
+
+      wrapper.classList.add("hide");
+
+      setTimeout(() => {
+        wrapper.style.display = " none";
+      },1300);
+    }
+  }
 
      triggerGhostRestart();
       setTimeout(() => {
